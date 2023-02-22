@@ -77,6 +77,7 @@ int find_builtin(info_t *info)
 	return (built_in_ret);
 }
 
+
 /**
  * find_cmd - finds a command in PATH
  * @info: the parameter & return info struct
@@ -107,7 +108,7 @@ void find_cmd(info_t *info)
 	}
 	else
 	{
-		if 9((interactive(info) || _getenv(info, "PATH=")
+		if ((interactive(info) || _getenv(info, "PATH=")
 			|| info->argv[0][0] == '/') && is_cmd(info, info->argv[0]))
 			fork_cmd(info);
 		else if (*(info->arg) != '\n')
@@ -117,6 +118,7 @@ void find_cmd(info_t *info)
 		}
 	}
 }
+
 
 /**
  * fork_cmd - forks an exec thread to run cmd
