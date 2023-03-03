@@ -1,4 +1,4 @@
-#ifdef _SHELL_H_
+#ifndef _SHELL_H_
 #define _SHELL_H_
 
 #include <stdio.h>
@@ -13,6 +13,11 @@
 #include <errno.h>
 
 /* for read/write buffers */
+#define READ_BUF_SIZE 1024
+#define WRITE_BUF_SIZE 1024
+#define BUF_FLUSH -1
+
+/* for command chaining */
 #define CMD_NORM	0
 #define CMD_OR	        1
 #define CMD_AND	        2
@@ -29,7 +34,7 @@
 #define HIST_FILE	".simple_shell_history"
 #define HIST_MAX	4096
 
-exter char **environ;
+extern char **environ;
 
 
 /**
@@ -110,30 +115,30 @@ typedef struct builtin
 int hsh(info_t *, char **);
 int find_builtin(info_t *);
 void find_cmd(info_t *);
-voiid fork_cmd(info_t *);
+void fork_cmd(info_t *);
 
 /* toem_parser.c */
 int is_cmd(info_t *, char *);
 char *dup_chars(char *, int, int);
 char *find_path(info_t *, char *, char *);
 
-/* loopsh.c */
-int loopsh(char **);
+/* loophsh.c */
+int loophsh(char **);
 
 /* toem_errors.c */
 void _eputs(char *);
 int _eputchar(char);
-int _eputfd(char c, int fd);
-int _putfd(char *str, int fd);
+int _putfd(char c, int fd);
+int _putsfd(char *str, int fd);
 
 /* toem_string.c */
 int _strlen(char *);
 int _strcmp(char *, char *);
-char *starts_with(const char *, const char);
+char *starts_with(const char *, const char *);
 char *_strcat(char *, char *);
 
 /* toem_string1.c */
-char *_strcpy(char *, char *, int);
+char *_strcpy(char *, char *);
 char *_strdup(const char *);
 void _puts(char *);
 int _putchar(char);
@@ -203,14 +208,14 @@ int _setenv(info_t *, char *, char *);
 char *get_history_file(info_t *info);
 int write_history(info_t *info);
 int read_history(info_t *info);
-int build_history(info_t *info, char *buf, int linecount);
+int build_history_list(info_t *info, char *buf, int linecount);
 int renumber_history(info_t *info);
 
 /* toem_lists.c */
 list_t *add_node(list_t **, const char *, int);
 list_t *add_node_end(list_t **, const char *, int);
 size_t print_list_str(const list_t *);
-int delete_node_at_index(list_t **, unsugned int);
+int delete_node_at_index(list_t **, unsigned int);
 void free_list(list_t **);
 
 /* toem_lists1.c */
